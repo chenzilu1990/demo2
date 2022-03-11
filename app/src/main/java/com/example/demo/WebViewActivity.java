@@ -12,6 +12,10 @@ import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.anythink.core.api.ATAdInfo;
+import com.anythink.core.api.AdError;
+import com.anythink.rewardvideo.api.ATRewardVideoAd;
+import com.anythink.rewardvideo.api.ATRewardVideoListener;
 import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdLoadType;
@@ -25,9 +29,11 @@ public class WebViewActivity extends AppCompatActivity {
     public static String TAG = "WebViewActivity";
     private boolean mIsLoaded = false;
     private static WebViewActivity app;
-    private  static TTRewardVideoAd ttRewardVideoAd1;
+    private static TTRewardVideoAd ttRewardVideoAd1;
     private TTAdNative mTTAdNative;
-    @SuppressLint("SetJavaScriptEnabled")
+    private static ATRewardVideoAd mTopRewardAD;
+
+    @SuppressLint({"SetJavaScriptEnabled", "JavascriptInterface"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,19 +51,16 @@ public class WebViewActivity extends AppCompatActivity {
         wb.setWebViewClient(new MyWebViewClient());
         wb.setWebChromeClient(new MyWebChromeClient());
 
-        wb.addJavascriptInterface(new anjs(),"app22222");
+        wb.addJavascriptInterface(new MTPADMgr(), "MTPADMgr");
 
         wb.loadUrl("file:///android_asset/demo.html");
 
 //        wb.loadUrl("https://www.baidu.com/");
         TTAdSdk.getAdManager().requestPermissionIfNecessary(getApplicationContext());
-        mTTAdNative= TTAdSdk.getAdManager().createAdNative(this);
+        mTTAdNative = TTAdSdk.getAdManager().createAdNative(this);
 
         loadRewardAD();
-
-
-
-
+        MTPADMgr.initRewardAD(this);
 
     }
 
@@ -65,7 +68,7 @@ public class WebViewActivity extends AppCompatActivity {
     private void loadRewardAD() {
         AdSlot adSlot = new AdSlot.Builder()
                 .setCodeId("948124558")
-                .setExpressViewAcceptedSize(500,500)
+                .setExpressViewAcceptedSize(500, 500)
                 .setOrientation(TTAdConstant.VERTICAL) //必填参数，期望视频的播放方向：TTAdConstant.HORIZONTAL 或 TTAdConstant.VERTICAL
                 .setAdLoadType(TTAdLoadType.LOAD)//推荐使用，用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，方便后续为开发者优化相关策略
                 .build();
@@ -98,8 +101,7 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
 
-    public static void showAD(){
-
+    public static void showAD() {
 
         app.runOnUiThread(new Runnable() {
             public void run() {
@@ -113,11 +115,12 @@ public class WebViewActivity extends AppCompatActivity {
 
 
 
+
     /**
      * 防止返回到之前的 Activity
      *
      * @param keyCode 按键
-     * @param event 事件
+     * @param event   事件
      * @return true
      */
     @Override

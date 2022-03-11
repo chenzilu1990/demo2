@@ -20,12 +20,20 @@
 <body>
 <h1>你好，世界！</h1>
 
-<button onclick="cc()">点我试试</button>
+<button onclick="showRewardAD()">激励视频</button>
+
+
+<button onclick="interstitialAD()">插屏广告</button>
 
 <script>
-    function cc() {
-     app22222.hello('asdasdvasdvasdvasvdasdvasdvasdvasd')
+    function showRewardAD() {
+     MTPADMgr.showMTPRewardAD()
     }
+
+    function interstitialAD() {
+     MTPADMgr.showMTPInterstitialAD()
+    }
+
 </script>
 
 

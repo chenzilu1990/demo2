@@ -61,7 +61,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         loadRewardAD();
         MTPADMgr.initRewardAD(this);
-
+        MTPADMgr.initIntertitalAD(this);
     }
 
 

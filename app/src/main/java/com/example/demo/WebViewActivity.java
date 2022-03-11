@@ -26,6 +26,7 @@ public class WebViewActivity extends AppCompatActivity {
     private boolean mIsLoaded = false;
     private static WebViewActivity app;
     private  static TTRewardVideoAd ttRewardVideoAd1;
+    private TTAdNative mTTAdNative;
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +51,24 @@ public class WebViewActivity extends AppCompatActivity {
 
 //        wb.loadUrl("https://www.baidu.com/");
         TTAdSdk.getAdManager().requestPermissionIfNecessary(getApplicationContext());
-        TTAdNative mTTAdNative= TTAdSdk.getAdManager().createAdNative(this);
+        mTTAdNative= TTAdSdk.getAdManager().createAdNative(this);
 
+        loadRewardAD();
+
+
+
+
+
+    }
+
+
+    private void loadRewardAD() {
         AdSlot adSlot = new AdSlot.Builder()
                 .setCodeId("948124558")
-//                .setRewardName("金币") //奖励的名称 选填
-//                .setRewardAmount(3)  //奖励的数量 选填
-
                 .setExpressViewAcceptedSize(500,500)
-//                .setUserID("tag123")//tag_id
-//                .setMediaExtra("media_extra") //附加参数
                 .setOrientation(TTAdConstant.VERTICAL) //必填参数，期望视频的播放方向：TTAdConstant.HORIZONTAL 或 TTAdConstant.VERTICAL
-                .setAdLoadType(TTAdLoadType.PRELOAD)//推荐使用，用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，方便后续为开发者优化相关策略
+                .setAdLoadType(TTAdLoadType.LOAD)//推荐使用，用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，方便后续为开发者优化相关策略
                 .build();
-
-
         mTTAdNative.loadRewardVideoAd(adSlot, new TTAdNative.RewardVideoAdListener() {
             @Override
             public void onError(int code, String message) {
@@ -86,29 +90,28 @@ public class WebViewActivity extends AppCompatActivity {
             public void onRewardVideoCached(TTRewardVideoAd ttRewardVideoAd) {
                 Log.e(TAG, "Callback --> onRewardVideoCached");
                 mIsLoaded = true;
-//              TToast.show(RewardVideoActivity.this, "Callback --> rewardVideoAd video cached");
-                ttRewardVideoAd1 = ttRewardVideoAd;
-//                ttRewardVideoAd.showRewardVideoAd(WebViewActivity.this, TTAdConstant.RitScenes.CUSTOMIZE_SCENES, "scenes_test");
+//                ttRewardVideoAd1 = ttRewardVideoAd;
+                ttRewardVideoAd.showRewardVideoAd(WebViewActivity.this, TTAdConstant.RitScenes.CUSTOMIZE_SCENES, "scenes_test");
 
             }
         });
-
-
-
-
-
     }
+
 
     public static void showAD(){
 
-        WebViewActivity.app.runOnUiThread(new Runnable() {
+
+        app.runOnUiThread(new Runnable() {
             public void run() {
-                Log.e(TAG, "showAD");
-                ttRewardVideoAd1.showRewardVideoAd(WebViewActivity.app, TTAdConstant.RitScenes.CUSTOMIZE_SCENES, "scenes_test");
+                Log.e(TAG, "showAD====");
+                app.loadRewardAD();
+//                ttRewardVideoAd1.showRewardVideoAd(WebViewActivity.app, TTAdConstant.RitScenes.CUSTOMIZE_SCENES, "scenes_test");
             }
         });
 
     }
+
+
 
     /**
      * 防止返回到之前的 Activity

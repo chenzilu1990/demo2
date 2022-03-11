@@ -90,8 +90,8 @@ public class WebViewActivity extends AppCompatActivity {
             public void onRewardVideoCached(TTRewardVideoAd ttRewardVideoAd) {
                 Log.e(TAG, "Callback --> onRewardVideoCached");
                 mIsLoaded = true;
-//                ttRewardVideoAd1 = ttRewardVideoAd;
-                ttRewardVideoAd.showRewardVideoAd(WebViewActivity.this, TTAdConstant.RitScenes.CUSTOMIZE_SCENES, "scenes_test");
+                ttRewardVideoAd1 = ttRewardVideoAd;
+//                ttRewardVideoAd.showRewardVideoAd(WebViewActivity.this, TTAdConstant.RitScenes.CUSTOMIZE_SCENES, "scenes_test");
 
             }
         });
@@ -104,8 +104,8 @@ public class WebViewActivity extends AppCompatActivity {
         app.runOnUiThread(new Runnable() {
             public void run() {
                 Log.e(TAG, "showAD====");
-                app.loadRewardAD();
-//                ttRewardVideoAd1.showRewardVideoAd(WebViewActivity.app, TTAdConstant.RitScenes.CUSTOMIZE_SCENES, "scenes_test");
+//                app.loadRewardAD();
+                ttRewardVideoAd1.showRewardVideoAd(WebViewActivity.app, TTAdConstant.RitScenes.CUSTOMIZE_SCENES, "scenes_test");
             }
         });
 

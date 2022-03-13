@@ -16,16 +16,17 @@ public class MTPADMgr {
     private static final String TAG = "MTPADMgr";
     private static ATRewardVideoAd mTopRewardAD;
     private static ATInterstitial mTopInterstitialAd;
-    private static Activity mActivety;
+    private static Activity mRewardActivety;
+    private static Activity mIntertitalActivety;
 
-    public  static void initRewardAD(Activity activity){
+    public static void initRewardAD(Activity activity){
         loadTopRewardAD(activity);
-        mActivety = activity;
+        mRewardActivety = activity;
     }
 
     public static void initIntertitalAD(Activity activity){
         loadInterstitialAD(activity);
-        mActivety = activity;
+        mIntertitalActivety = activity;
     }
 
     @JavascriptInterface
@@ -33,19 +34,20 @@ public class MTPADMgr {
         Log.e(TAG, "showTopRewardAD===========");
         if (mTopRewardAD.isAdReady()){
             Log.e(TAG, "isAdReady==========");
-            mTopRewardAD.show(mActivety);
+            mTopRewardAD.show(mRewardActivety);
         } else {
             Log.e(TAG, "showTopRewardAD==========");
             mTopRewardAD.load();
         }
     }
 
+
     @JavascriptInterface
     public static void showMTPInterstitialAD(){
         Log.e(TAG, "showMTPInterstitialAD======111");
         if (mTopInterstitialAd.isAdReady()){
             Log.e(TAG, "showMTPInterstitialAD======1112222");
-            mTopInterstitialAd.show(mActivety);
+            mTopInterstitialAd.show(mIntertitalActivety);
         } else {
             Log.e(TAG, "showMTPInterstitialAD======111222233333");
             mTopInterstitialAd.load();

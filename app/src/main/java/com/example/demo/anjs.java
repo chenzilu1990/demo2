@@ -7,14 +7,13 @@ public class anjs extends Object {
     @JavascriptInterface
     public void hello(String msg) {
         System.out.println(msg);
-//        WebViewActivity.showAD();
-        MTPADMgr.showMTPRewardAD();
+
     }
 
     @JavascriptInterface
     public void showMTPRewardAD(){
         Log.e(TAG, "showMTPRewardAD==========");
-        MTPADMgr.showMTPRewardAD();
+
     }
 
 

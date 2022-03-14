@@ -15,7 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.anythink.core.api.ATAdInfo;
 import com.anythink.core.api.AdError;
 import com.anythink.rewardvideo.api.ATRewardVideoAd;
+import com.anythink.rewardvideo.api.ATRewardVideoAutoAd;
+import com.anythink.rewardvideo.api.ATRewardVideoAutoLoadListener;
 import com.anythink.rewardvideo.api.ATRewardVideoListener;
+//import com.anythink.re
 import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdLoadType;
@@ -60,8 +63,13 @@ public class WebViewActivity extends AppCompatActivity {
         mTTAdNative = TTAdSdk.getAdManager().createAdNative(this);
 
         loadRewardAD();
-        MTPADMgr.initRewardAD(this);
-        MTPADMgr.initIntertitalAD(this);
+//        MTPADMgr.initIntertitalAD(this);
+        MTPADMgr.mRewardActivety = this;
+        MTPADMgr.mIntertitalActivety = this;
+        MTPADMgr.wb = wb;
+
+//        MTPADMgr.initAutoRewardAD(this);
+
     }
 
 

@@ -31,8 +31,10 @@ public class MTPADMgr {
     private static String mRewardID = "";
     //    private static String mInterstitalID = "b622b13ae572cc";
     private static String mInterstitalID = "";
-//    private static  mOnReward;
+    //    private static  mOnReward;
     public static WebView wb;
+
+    private static Boolean isReward = false;
 
     @JavascriptInterface
     public static void initMTPRewardAD(String adCode) {
@@ -64,6 +66,30 @@ public class MTPADMgr {
             mTopRewardAD.load();
         }
     }
+
+
+//    @JavascriptInterface
+    public static void onMTPRewardADClose(Boolean isReward) {
+        Log.e(TAG, "onMTPRewardADClose===" + isReward);
+        if (isReward){
+            wb.evaluateJavascript("demo:onRewardADClose(true)", new ValueCallback(){
+                @Override
+                public void onReceiveValue(Object o) {
+                    Log.e(TAG, "onRewardADRewardEnd====");
+                }
+            });
+        } else {
+            wb.evaluateJavascript("demo:onRewardADClose(false)", new ValueCallback(){
+                @Override
+                public void onReceiveValue(Object o) {
+                    Log.e(TAG, "onRewardADRewardEnd====");
+                }
+            });
+
+        }
+    }
+
+
 
 
     @JavascriptInterface
@@ -193,6 +219,7 @@ public class MTPADMgr {
             public void onRewardedVideoAdPlayStart(ATAdInfo atAdInfo) {
                 //ATAdInfo可区分广告平台以及获取广告平台的广告位ID等
                 //请参考 https://docs.toponad.com/#/zh-cn/android/android_doc/android_sdk_callback_access?id=callback_info
+                isReward = false;
                 mRewardVideoAd.load();
             }
 
@@ -211,17 +238,14 @@ public class MTPADMgr {
             public void onRewardedVideoAdClosed(ATAdInfo atAdInfo) {
                 //建议在此回调中调用load进行广告的加载，方便下一次广告的展示（不需要调用isAdReady()）
 //                mRewardVideoAd.load();
+                onMTPRewardADClose(isReward);
+
             }
 
             @Override
             public void onReward(ATAdInfo atAdInfo) {
                 //建议在此回调中下发奖励，一般在onRewardedVideoAdClosed之前回调
-                wb.evaluateJavascript("demo:onRewardADReward()", new ValueCallback(){
-                    @Override
-                    public void onReceiveValue(Object o) {
-                        Log.e(TAG, "onRewardADReward====");
-                    }
-                });
+                isReward = true;
             }
 
             @Override

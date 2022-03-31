@@ -72,14 +72,14 @@ public class MTPADMgr {
     public static void onMTPRewardADClose(Boolean isReward) {
         Log.e(TAG, "onMTPRewardADClose===" + isReward);
         if (isReward){
-            wb.evaluateJavascript("onRewardADClose('{ type : \"isEnd\"}')", new ValueCallback(){
+            wb.evaluateJavascript("onRewardADClose('{ \"type\" : \"isEnd\"}')", new ValueCallback(){
                 @Override
                 public void onReceiveValue(Object o) {
                     Log.e(TAG, "onRewardADRewardEnd====");
                 }
             });
         } else {
-            wb.evaluateJavascript("onRewardADClose('{ type : \"exit\"}')", new ValueCallback(){
+            wb.evaluateJavascript("onRewardADClose('{ \"type\" : \"exit\"}')", new ValueCallback(){
                 @Override
                 public void onReceiveValue(Object o) {
                     Log.e(TAG, "onRewardADRewardEnd====");

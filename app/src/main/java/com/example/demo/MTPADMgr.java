@@ -72,14 +72,14 @@ public class MTPADMgr {
     public static void onMTPRewardADClose(Boolean isReward) {
         Log.e(TAG, "onMTPRewardADClose===" + isReward);
         if (isReward){
-            wb.evaluateJavascript("onRewardADClose(true)", new ValueCallback(){
+            wb.evaluateJavascript("onRewardADClose('{ type : 'isEnd'}')", new ValueCallback(){
                 @Override
                 public void onReceiveValue(Object o) {
                     Log.e(TAG, "onRewardADRewardEnd====");
                 }
             });
         } else {
-            wb.evaluateJavascript("onRewardADClose(false)", new ValueCallback(){
+            wb.evaluateJavascript("onRewardADClose('{ type : 'exit'}')", new ValueCallback(){
                 @Override
                 public void onReceiveValue(Object o) {
                     Log.e(TAG, "onRewardADRewardEnd====");
@@ -89,8 +89,15 @@ public class MTPADMgr {
         }
     }
 
+    public static void callMTPWVJavaScript(String js){
+        wb.evaluateJavascript(js, new ValueCallback(){
+            @Override
+            public void onReceiveValue(Object o) {
+                Log.e(TAG, "onRewardADRewardEnd====");
+            }
+        });
 
-
+    }
 
     @JavascriptInterface
     public static void showMTPInterstitialAD() {
@@ -232,6 +239,7 @@ public class MTPADMgr {
                 //注意：禁止在此回调中执行广告的加载方法进行重试，否则会引起很多无用请求且可能会导致应用卡顿
                 //AdError，请参考 https://docs.toponad.com/#/zh-cn/android/android_doc/android_test?id=aderror
                 Log.e(TAG, "onRewardedVideoAdPlayFailed:" + adError.getFullErrorInfo());
+                callMTPWVJavaScript("onRewardADClose('{type : 'error'}')");
             }
 
             @Override

@@ -18,6 +18,7 @@
     <!--[if lt IE 9]>
     <script src="https://fastly.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
     <script src="https://fastly.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <script src="demo.js"></script>
     <![endif]-->
 </head>
 <body>
@@ -33,19 +34,18 @@
     MTPADMgr.initMTPIntertitalAD("b622b13ae572cc");
     MTPADMgr.initMTPRewardAD("b622aafc253d77");
 
+
     function showRewardAD() {
-        MTPADMgr.showMTPRewardAD()
+    	MTPADMgr.showMTPRewardAD()
     }
 
     function onRewardADClose(isReward) {
-        console.log("onRewardADClose============" + isReward)
-        
+    	console.log("onRewardADClose============" + isReward)
+
     }
 
     function showInterstitialAD() {
-        MTPADMgr.onMTPRewardADClose(function() {
-
-        })
+    	MTPADMgr.showMTPInterstitialAD()
     }
 
 </script>

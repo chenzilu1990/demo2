@@ -239,7 +239,7 @@ public class MTPADMgr {
                 //注意：禁止在此回调中执行广告的加载方法进行重试，否则会引起很多无用请求且可能会导致应用卡顿
                 //AdError，请参考 https://docs.toponad.com/#/zh-cn/android/android_doc/android_test?id=aderror
                 Log.e(TAG, "onRewardedVideoAdPlayFailed:" + adError.getFullErrorInfo());
-                callMTPWVJavaScript("onRewardADClose('{type : 'error'}')");
+                callMTPWVJavaScript("onRewardADClose('{ \"type\" : \"error\"}')");
             }
 
             @Override
